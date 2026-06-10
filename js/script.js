@@ -1,49 +1,47 @@
-const header = document.querySelector(".header");
-const menuLinks = document.querySelectorAll(".menu a");
+const carousel = document.getElementById("decoracoesCarousel");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
 
-// Efeito no header ao rolar a página
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    header.classList.add("header-scroll");
-  } else {
-    header.classList.remove("header-scroll");
-  }
-});
+let currentIndex = 0;
 
-// Rolagem suave nos links com #
-menuLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const href = link.getAttribute("href");
+function getItemsPerPage() {
+  return window.innerWidth <= 768 ? 6 : 12;
+}
 
-    if (href.startsWith("#")) {
-      event.preventDefault();
+function updateCarousel() {
+  if (!carousel) return;
 
-      const section = document.querySelector(href);
+  const items = document.querySelectorAll(".decoracao-item");
+  const itemsPerPage = getItemsPerPage();
+  const maxIndex = Math.max(0, items.length - itemsPerPage);
 
-      if (section) {
-        section.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }
+  if (currentIndex > maxIndex) currentIndex = maxIndex;
+  if (currentIndex < 0) currentIndex = 0;
+
+  items.forEach((item, index) => {
+    if (index >= currentIndex && index < currentIndex + itemsPerPage) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
     }
   });
-});
+}
 
-// Animação simples nos cards ao aparecer na tela
-const cards = document.querySelectorAll(".card, .galeria-home img");
+if (carousel && btnPrev && btnNext) {
+  btnNext.addEventListener("click", () => {
+    currentIndex += getItemsPerPage();
+    updateCarousel();
+  });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-      }
-    });
-  },
-  {
-    threshold: 0.2
-  }
-);
+  btnPrev.addEventListener("click", () => {
+    currentIndex -= getItemsPerPage();
+    updateCarousel();
+  });
 
-cards.forEach((card) => observer.observe(card));
+  window.addEventListener("resize", () => {
+    currentIndex = 0;
+    updateCarousel();
+  });
+
+  updateCarousel();
+}
