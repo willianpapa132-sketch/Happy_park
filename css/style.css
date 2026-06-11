@@ -149,6 +149,16 @@ body {
 .btn-blue {
   background: #0078ff;
 }
+main{
+  background: linear-gradient(
+    135deg,
+    #0b3d91 0%,
+    #1e88e5 45%,
+    #ff4fa3 72%,
+    #e53935 96%,
+    #d4af37 100%
+  );
+}
 
 /* SERVIÇOS HOME */
 .card-icon {
@@ -158,7 +168,6 @@ body {
 
 .servicos-home {
   padding: 80px 24px;
-  background: #fff;
   text-align: center;
 }
 
@@ -166,7 +175,7 @@ body {
 .top-decoracoes h2 {
   font-size: 36px;
   margin-bottom: 36px;
-  color: #ff2f7d;
+  color: #ffd400;
 }
 
 .servicos-grid {
@@ -178,7 +187,7 @@ body {
 }
 
 .servico-card {
-  background: #fff;
+  background: #bacae2;
   padding: 30px 22px;
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.12);
@@ -197,7 +206,6 @@ body {
 /* TOP DECORAÇÕES */
 .top-decoracoes {
   padding: 80px 24px;
-  background: #050914;
   text-align: center;
 }
 
@@ -532,6 +540,7 @@ body {
 ========================== */
 
 .decoracoes-page {
+  overflow-x: hidden;
   min-height: 100vh;
   background: linear-gradient(
     135deg,
@@ -579,6 +588,7 @@ body {
     top:55%;
     left:0;
     width:100%;
+    height:50px;
     pointer-events:none;
 }
 
@@ -598,10 +608,12 @@ body {
 
 #btnPrev{
     left:0;
+    background:#ff2f7d;
 }
 
 #btnNext{
     right:0;
+    background:#0078ff;
 }
 
 .decoracoes-carousel{
@@ -625,8 +637,20 @@ body {
     display:block;
 }
 
-.decoracao-item h3{
-    padding:12px;
+
+.decoracao-item {
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.decoracao-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+.decoracao-item.active {
+  transform: scale(1.08);
+  z-index: 10;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.35);
 }
 
 /* MOBILE */
@@ -650,13 +674,142 @@ body {
 
     #btnPrev{
         left:5px;
+        background:#ff2f7d;
     }
 
     #btnNext{
         right:5px;
+        background:#0078ff;
     }
 
     .decoracoes-hero h1{
         font-size:36px;
     }
+}
+.image-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.image-modal.active {
+  display: flex;
+}
+
+.image-modal img {
+  max-width: 92%;
+  max-height: 88vh;
+  border-radius: 18px;
+  object-fit: contain;
+}
+
+.image-modal span {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  color: #fff;
+  font-size: 42px;
+  cursor: pointer;
+}
+/* KIT PEGUE E MONTE */
+
+.kit-carousel-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 70px 90px;
+  position: relative;
+}
+
+.kit-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.kit-header h2 {
+  color: #ffd400;
+  font-size: 32px;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+
+.kit-buttons {
+  position: absolute;
+  top: 55%;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.kit-btn {
+  width: 65px;
+  height: 65px;
+  border: none;
+  border-radius: 50%;
+  background: #ff2f7d;
+  color: #fff;
+  font-size: 38px;
+  font-weight: bold;
+  cursor: pointer;
+  pointer-events: auto;
+  position: absolute;
+  z-index: 20;
+}
+
+#kitPrev {
+  left: 0;
+}
+
+#kitNext {
+  right: 0;
+  background: #0078ff;
+}
+
+.kit-carousel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.kit-item {
+  background: transparent;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.kit-item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: 15px;
+}
+
+@media(max-width:768px) {
+  .kit-carousel-section {
+    padding: 20px 50px 70px;
+  }
+
+  .kit-carousel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .kit-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 32px;
+  }
+
+  #kitPrev {
+    left: 5px;
+  }
+
+  #kitNext {
+    right: 5px;
+  }
 }
